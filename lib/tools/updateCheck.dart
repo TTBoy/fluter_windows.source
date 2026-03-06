@@ -29,7 +29,7 @@ class UpdateChecker {
           // 比较版本号
           if (_compareVersions(latestRelease.versionNumber, currentVersion) > 0) {
             // 显示更新对话框
-            // _showUpdateDialog(context, latestRelease);
+            _showUpdateDialog(context, latestRelease);
           }else{
             print('版本检查正确');
           }

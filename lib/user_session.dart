@@ -29,7 +29,7 @@ class UserSession {
   String apiKey = 'sk-NHfglGBWKuzKXBH5kV55BtNJaxrjRp8lkvJ7qiWK3EqLitG4';
   String modelName='gemini-2.5-flash';
   String getRepetPath = '';
-  String version='0.0.26';
+  String version='0.0.27';
 
   /// 保存设置的键值常量
   static const String _baseUrlKey = 'system_baseUrl';

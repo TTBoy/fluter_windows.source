@@ -301,7 +301,7 @@ String apiUrl = 'https://api.shubiaobiao.com/v1/chat/completions'; // AI服务AP
 String apiKey = 'sk-NHfglGBWKuzKXBH5kV55BtNJaxrjRp8lkvJ7qiWK3EqLitG4'; // 默认API密钥
 String modelName='gemini-2.5-flash'; // 默认AI模型
 String getRepetPath = ''; // 查重路径
-String version='0.0.26'; // 软件版本号
+String version='0.0.27'; // 软件版本号
 ```
 
 #### 运行时配置

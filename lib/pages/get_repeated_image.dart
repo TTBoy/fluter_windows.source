@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -84,45 +85,75 @@ class _GetRepeatedImageState extends State<GetRepeatedImage> {
   //获取重复图片组
   Future<void> _fetchDuplicateGroups() async {
     setState(() => isLoading = true);
-    try {
-      final response = await http.get(
-        Uri.parse(
-          '${UserSession().baseUrl}/api/image/duplicates?page=$currentPage&pageSize=$pageSize',
-        ),
-        headers: {
-          'Authorization': 'Bearer ${UserSession().token ?? ''}',
-          'Content-Type': 'application/json',
-        },
-      );
+    const int maxRetries = 3;
+    int attempt = 0;
 
-      // print(response.body);
+    while (attempt < maxRetries) {
+      try {
+        final response = await http.get(
+          Uri.parse(
+            '${UserSession().baseUrl}/api/image/duplicates?page=$currentPage&pageSize=$pageSize',
+          ),
+          headers: {
+            'Authorization': 'Bearer ${UserSession().token ?? ''}',
+            'Content-Type': 'application/json',
+          },
+        ).timeout(const Duration(seconds: 30)); // 添加超时
 
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
 
-        final groups = (responseData['data']['duplicateGroups'] as List)
-            .map((group) => DuplicateGroupModel.fromJson(group))
-            .toList();
+          final groups = (responseData['data']['duplicateGroups'] as List)
+              .map((group) => DuplicateGroupModel.fromJson(group))
+              .toList();
 
-        final paginationData = PaginationModel.fromJson(
-          responseData['data']['pagination'],
+          final paginationData = PaginationModel.fromJson(
+            responseData['data']['pagination'],
+          );
+
+          setState(() {
+            duplicateGroups = groups;
+            pagination = paginationData;
+            currentPage = paginationData.currentPage;
+          });
+          return; // 成功则退出
+        } else {
+          throw Exception('请求失败: ${response.statusCode}');
+        }
+      } on http.ClientException catch (e) {
+        attempt++;
+        if (attempt >= maxRetries) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('网络连接失败，请检查网络或稍后重试: ${e.toString()}'),
+              duration: const Duration(seconds: 5),
+            ),
+          );
+          break;
+        }
+        // 等待重试
+        await Future.delayed(Duration(seconds: attempt * 2));
+      } on TimeoutException catch (e) {
+        attempt++;
+        if (attempt >= maxRetries) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('请求超时，请稍后重试: ${e.toString()}'),
+              duration: const Duration(seconds: 5),
+            ),
+          );
+          break;
+        }
+        await Future.delayed(Duration(seconds: attempt * 2));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('加载失败: ${e.toString()}')),
         );
-
-        setState(() {
-          duplicateGroups = groups;
-          pagination = paginationData;
-          currentPage = paginationData.currentPage;
-        });
-      } else {
-        throw Exception('请求失败: ${response.statusCode}');
+        break;
       }
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('加载失败: ${e.toString()}')));
-    } finally {
-      setState(() => isLoading = false);
     }
+
+    setState(() => isLoading = false);
   }
 
   void _changePage(int newPage) {
