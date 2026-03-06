@@ -5,34 +5,38 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: "3.19.0"
 
-      - name: Flutter version
-        run: flutter --version
+      - name: Enable Windows
+        run: flutter config --enable-windows-desktop
 
-      - name: Install dependencies
+      - name: Install deps
         run: flutter pub get
 
-      - name: Build Windows
+      - name: Build
         run: flutter build windows --release
 
-      - name: Show build folder
-        run: dir build/windows/runner
+      - name: Check build
+        run: dir build/windows/x64/runner/Release
 
-      - name: Zip build
-        run: Compress-Archive -Path build/windows/runner/Release/* -DestinationPath windows-build.zip
+      - name: Zip
+        run: |
+          Compress-Archive `
+            -Path build/windows/x64/runner/Release/* `
+            -DestinationPath windows-build.zip
 
-      - name: Upload artifact
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build
+          name: windows-app
           path: windows-build.zip
