@@ -1,0 +1,11 @@
+{
+    "answers": [
+        "answer1",
+        "answer2",
+        "answer3",
+        "answer3"
+    ],
+    "rightAnswerIndex":0,
+    "explanation":"正确答案的解释",
+    "COT":"第一步、第二步、第三步……"
+}

@@ -1,0 +1,462 @@
+{
+    "rule": "1. 根据上述图片复杂度要求、确认当前图片符合相应标准；2. 问题必须有且仅有一个正确答案、其他选择错误明显；3. 问题要具体明确、避免模糊表述；4. 问题选项四个、具体根据图片内容确定、答案唯一随机出现在这四个选项当中；5. 问题要基于图片中可以清楚观察到的内容；6. 参考样例的格式和风格、但内容要根据图片灵活调整；7.text_COT：（解题的步骤），要简短清晰、逻辑性强、步骤高度概括(必要时需要结合外部知识进行)",
+    "formatRule": {
+        "question": "具体明确的问题内容",
+        "options": [
+            "选项A内容",
+            "选项B内容",
+            "选项C内容",
+            "选项D内容"
+        ],
+        "correct_answer": 0,
+        "explanation": "正确答案的解释",
+        "text_COT": "第一步、第二步......（解题步骤）"
+    },
+    "data": {
+        "categorys": [
+            {
+                "categoryName": "recognition（感知）",
+                "prompt": "识别图中物体是什么、动物种类、特定物体/人物的属性特征（大小、颜色、形状、长短、材质、性别、年龄、动作、职业、民族）、以及整张图像/多张拼接图像的色彩信息（对比度、色调、构图）。",
+                "difficulties": [
+                    "提问对象为画面主体",    
+                    "提问对象为画面主体"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "物体",
+                        "questionDirections": ["物体是什么", "大小", "颜色", "形状", "长短", "材质"]
+                    },
+                    {
+                        "collectorTypeName": "人物",
+                        "questionDirections": ["性别", "年龄", "动作", "职业", "民族"]
+                    },
+                    {
+                        "collectorTypeName": "动物",
+                        "questionDirections": ["种类"]
+                    },
+                    {
+                        "collectorTypeName": "整体色彩图像",
+                        "questionDirections": ["对比度", "色调"]
+
+                    },
+
+                    {
+                        "collectorTypeName": "拼接色彩图像",
+                        "questionDirections": ["对比度", "色调"]
+                    },
+                    {
+                        "collectorTypeName": "图像构图",
+                        "questionDirections": ["中心构图","水平构图","垂直构图","三角形构图","对称构图","框架构图","对角线构图","引导线构图","前景构图","黄金分割构图","留白构图"]
+                    }
+                ],
+                "example": "样例1：图片中的物体是什么？A.支架 B.测量仪器 C.商品推进器 D.板子;\n样例2：图片中身穿黑色上衣的人性别是？A.男生 B.无法确定 C.女生 D.看不清楚;\n样例3：图片中的动物是什么？A.松鼠 B.环尾狐猴 C.浣熊 D.猴猿;\n样例4：这四组图像中那组对比度最高？A.左上 B.右上 C.左下 D.右下"
+            },
+            {
+                "categoryName": "object_counting（计数）",
+                "prompt": "统计图中物体/人物的个数，包含通用场景、昏暗场景、某物体不完整场景、密集型物体场景、猜谜场景、对比不明显、诱导性场景（提问物体不在画面中）。",
+                "difficulties": [
+                    "",
+                    "具有诱导性提问"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "物体个数",
+                        "questionDirections": ["物体是什么", "大小", "颜色", "形状", "长短", "材质"]
+                    },
+                    {
+                        "collectorTypeName": "人物个数",
+                        "questionDirections": ["通用场景", "昏暗场景", "不完整场景", "密集场景", "猜谜场景", "对比不明显", "诱导场景"]
+                    }
+                ],
+                "example":"样例1：图片中有多少人在演奏音乐？A.4人 B.5人 C.6人 D.7人\n样例2：图片中有多少人的手叠放在一起？A.5人 B.6人 C.7人 D.8人\n样例3：跑道上有多少人正在起跑？A.5人 B.6人 C.7人 D.8人\n样例4：图片中有多少人在行走？A.0人 B.1人 C.2人 D.3人\n样例5：图片中有多少个苹果？A.1个 B.2个 C.3个 D.4个或更多\n样例6：图片中一共有多少只动物？A.2只 B.3只 C.4只 D.5只\n样例7：图片中有多少辆汽车？A.1辆 B.2辆 C.3辆 D.4辆\n样例8：图片中有多少个红色物体？A.1个 B.2个 C.3个 D.4个;"
+            },
+            {
+                "categoryName": "localization（定位）",
+                "prompt": "确定图像中各个物体所处的具体位置，确定物体间的相对位置关系等，能够精确地指出物体在图像中的坐标或区域。",
+                "difficulties": [
+                    "提问对象为画面主体",
+                    "提问对象为画面主体"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "物体",
+                        "questionDirections": ["图中位置", "物体间相对位置"]
+                    },
+                    {
+                        "collectorTypeName": "人物个数",
+                        "questionDirections": ["图中位置", "人物间相对位置"]
+                    },
+                    {
+                        "collectorTypeName": "动物",
+                        "questionDirections": ["图中位置", "动物间相对位置"]
+                    }
+                ],
+                "example":"样例1：图片中有几座木房子？A.1座 B.2座 C.3座 D.4座\n样例2：图中都看到几座大桥的高楼？A.2座 B.3座 C.4座 D.5座\n样例3：闪电出现在图片的哪个区域？A.图片中间 B.图片中间偏左 C.图片中间偏右 D.图片下方\n样例4：图中风车和小木屋的相对关系是？A.风车在小木屋的左侧 B.风车在小木屋的右侧 C.风车在小木屋的前方 D.风车在小木屋的后方\n样例5：图片中的红色汽车位于哪里？A.画面左侧 B.画面右侧 C.画面中央 D.画面背景\n样例6：图片中的人物站在什么位置？A.桥上 B.桥下 C.河边 D.山顶"
+            },
+             {
+                "categoryName": "image_scene_topic（场景及主题）",
+                "prompt": "能够识别出图像所处的典型场景（如自然风光、城市街道、室内环境）以及传达的核心主题（如聚会、运动、自然景观、天气），并对核心主体对象/特征进行判断与理解，注重对图像内容的宏观理解。",
+                "difficulties": [
+                    "提问对象为画面主体",
+                    "提问对象为画面主体"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "图像场景",
+                        "questionDirections": ["自然风光", "城市街道", "室内环境"]
+                    },
+                    {
+                        "collectorTypeName": "图片主题",
+                        "questionDirections": ["聚会", "运动", "天气", "工作", "节日", "赛事", "宗教", "自然景观"]
+                    }
+                ],
+                "example":"样例1：这张图片所展示的主体是？A.赛龙舟 B.拔河赛 C.跑步 D.跳绳\n样例2：图片中的聚会出现在什么场景下？A.发布会 B.生日 C.会议 D.直播\n样例3：这张图片展示了室内哪一个区域的环境？A.客厅 B.厨房 C.卧室 D.书房\n样例4：图片想要表达的主体是什么？A.大树 B.红色长椅 C.坐在长椅上的老年人 D.墙壁\n样例5：这张图片的主要场景是？A.海滩度假 B.山地徒步 C.城市观光 D.乡村生活\n样例6：图片展示的是什么类型的活动？A.体育比赛 B.文艺演出 C.商业活动 D.教育培训"
+            },
+            {
+                "categoryName": "statistical_reasoning（统计推理）",
+                "prompt": "1.理解图像中各种图表（如流程图、思维导图、表格、折线图、柱状图、饼状图）所表达的信息，主要评估模型对统计数据的分析和解读，关注模型能否从统计图表中提取关键数据信息，理解数据的分布、趋势、相关性等特征，并基于这些数据进行进一步的分析和计算。\n2.分析图中有多个物体，根据图中的特定颜色、形状、大小的物体，进行一些计数和计算。",
+                "difficulties": [
+                    "单步推理",
+                    "以下满足一项:1、多步推理；2、需要结合外部知识进行"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "图表计算",
+                        "questionDirections": ["流程图", "思维导图", "表格", "折线图", "柱状图", "饼状图", "散点图"]
+                    },
+                    {
+                        "collectorTypeName": "物体属性统计",
+                        "questionDirections": ["'颜色", "形状", "大小'"]
+                    }
+                ],
+                "example":"样例1：销售部的差旅费各项费用总和是多少？A.23521元 B.23212元 C.23799元 D.20098元\n样例2：2024年中国和德国举办展会占比之和是多少？A.60% B.65% C.70% D.75%\n样例3：吴瑞阳最高得分和最低得分的分差差值是多少？A.7分 B.8分 C.9分 D.10分\n样例4：若图中有5个彩色线轴，包括1个红色线轴，2个绿色线轴，1个粉色线轴和1个蓝色线轴。如果随机选择个线轴，则抽到绿色线轴的概率是多少？A.六分之一 B.三分之一 C.二分之一 D.三分之二\n样例5：根据图表数据，哪个月份的销售额最高？A.3月 B.6月 C.9月 D.12月\n样例6：图中柱状图显示的平均值是多少？A.45 B.50 C.55 D.60"
+            },
+            {
+                "categoryName": "common_reasoning（常识推理）",
+                "prompt": "基于常识和背景知识，对图像中的场景或物体进行合理推理，如根据图像中的天气状况推断人们的穿着需求；根据物体的位置推测其用途；推断人物的关系和年龄；分析某件事的原因和未来可能发生的事情；对未来情况作预测；对某物体在画面中的面积占比进行估计等。",
+                "difficulties": [
+                    "单步推理",
+                    "以下满足一项：1、 多步推理；2、 需要结合外部知识进行"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "天气",
+                        "questionDirections": ["推断穿着"]
+                    },
+                    {
+                        "collectorTypeName": "物体",
+                        "questionDirections": ["用途"]
+                    },
+                    {
+                        "collectorTypeName": "人物",
+                        "questionDirections": ["关系", "年龄"]
+                    },
+                    {
+                        "collectorTypeName": "事件",
+                        "questionDirections": ["起因", "未来可能发生"]
+                    }
+
+                ],
+                "example":"样例1：图中的笔最常用于以下哪种创作方式？A.插画绘制 B.油画创作 C.水彩画创作 D.雕塑创作\n样例2：图片中动物的耳朵非常灵敏，主要用途不包括以下哪项？A.定位声音来源 B.平衡身体 C.表达情绪 D.过滤灰尘\n样例3：图中所展示的人物关系最可能为哪种A.朋友 B.夫妻 C.陌生人 D.父女\n样例4：以下哪项不是图片天气气象带来的主要危害？A.引发地震 B.摧毁房屋建筑 C.掀翻车辆船只 D.造成人员伤亡\n样例5：根据图片中人物的穿着，最可能是什么季节？A.春季 B.夏季 C.秋季 D.冬季\n样例6：图片中的场景最可能发生在一天中的什么时候？A.早晨 B.中午 C.下午 D.晚上"
+            },
+            {
+                "categoryName": "diagram_reasoning（图表推理）",
+                "prompt": "关注统计类图表的推理能力，包括对图表中元素关系、流程顺序、结构组成等的把握。常见的有流程图、思维导图、结构示意图、网络拓扑图、工程图纸，这些图表主要用于表示事物的结构、流程与逻辑关系。例如，在流程图中，需要理解各个步骤之间的先后顺序和逻辑关系；在结构示意图中，要能识别出各组成部分及其相互连接方式。",
+                "difficulties": [
+                    "单步推理",
+                    "以下满足一项：1、多步推理；2、 需要结合外部知识进行"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "图表顺序",
+                        "questionDirections": ["流程图", "思维导图", "结构示意图", "网络拓扑图", "工程图纸"]
+                    },
+                    {
+                        "collectorTypeName": "逻辑关系",
+                        "questionDirections": ["流程图", "思维导图", "结构示意图", "网络拓扑图", "工程图纸"]
+                    },
+                    {
+                        "collectorTypeName": "图表结构",
+                        "questionDirections": ["流程图", "思维导图", "结构示意图", "网络拓扑图", "工程图纸"]
+                    }
+                ],
+                "example":"样例1：在建筑物结构中，直接支撑接板的构件是？A.墙 B.梁 C.楼梯 D.柱杆\n样例2：在检验流程中，实托出样检验之后，各检验中心紧接着要进行的步骤是什么？A.合同评审 B.抽样 C.方法准备 D.环境准备\n样例3：图中蛇的数量突然大幅减少，短期内对食虫鸟的种群数量可能产生怎样的影响？A.食虫鸟种群数量增加 B.食虫鸟种群数量减少 C.食虫鸟种群数量无明显变化 D.食虫鸟种群数量先减少后增加\n样例4：根据流程图，在数据收集步骤之后应该进行什么？A.数据分析 B.结果验证 C.报告生成 D.质量检查\n样例5：在网络拓扑图中，中心节点的作用是什么？A.数据存储 B.信号放大 C.路由转发 D.安全防护"
+            },
+            {
+                "categoryName": "geography_earth_agri（地理&地球科学&农业）",
+                "prompt": "主要评估模型在地理学、地球科学和农业科学相关领域的功能。主要以初中、高中阶段的知识为主，均需要结合图像进行回答。例如：地球运动与天体观测、季节变化、气候变暖、地质构造、地貌形成以及世界地理认知等知识。",
+                "difficulties": [
+                    "初中知识",
+                    "高中知识"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "地理学",
+                        "questionDirections": ["世界地理", "季节变化", "人文地理", "土壤及生物"]
+                    },
+                    {
+                        "collectorTypeName": "地球科学",
+                        "questionDirections": ["地球运动", "地质构造", "地貌形成", "地球与宇宙"]
+                    },
+                    {
+                        "collectorTypeName": "农业科学",
+                        "questionDirections": ["作物科学", "畜牧与兽医", "园艺作物"]
+                    },
+                    {
+                        "collectorTypeName": "天文学",
+                        "questionDirections": ["天体观测", "月相变化"]
+                    }
+                ],
+                "example":"样例1：若地球自转速度突然加快，除了宜夜更替周期变短外，还会对下列哪种地理现象产生明显影响？A.地球表面的板块运动 B.地球上不同纬度地区的气压带分布 C.地球表面的地转偏向力 D.地球的平均海平面高度\n样例2：在逆断层形成过程中，主要的受力方式是什么？A.水平拉伸力 B.水平挤压力 C.垂直上升力 D.垂直下降力\n样例3：下列现象中，能体现季节变化的是？A.每天太阳的升起和落下 B.学校每周一举行升旗仪式 C.树木在春季发芽，秋季落叶 D.人们每天的作息时间安排\n样例4：在月相变化过程中，从新月到满月阶段，月球表面被太阳照亮部分的面积变化趋势是怎样的？A.逐渐减小 B.逐渐增大 C.先增大后减小 D.保持不变\n样例5：图片中显示的地貌特征最可能形成于哪种地质作用？A.风化作用 B.侵蚀作用 C.沉积作用 D.构造作用\n样例6：根据图片中的植被特征，该地区的气候类型最可能是？A.热带雨林气候 B.温带大陆性气候 C.地中海气候 D.热带草原气候"
+            },
+            {
+                "categoryName": "single_instance_reasoning（单实例推理）",
+                "prompt": "对图像中单个物体的属性进行深入推理，如根据外观特征推断其功能、用途或状态，推测天气及与当前物体相关的延伸知识等；需要结合先验知识与视觉信息进行分析（物体功能、天气推测、时间推测、地标建筑推理，以及物理、化学、光学、电学、磁学等属性）物理和化学完全分开，不可在同一个问题中出现物理和化学两种属性。",
+                "difficulties": [
+                    "推理不需要外部知识",
+                    "推理需要外部知识"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "物体",
+                        "questionDirections": ["功能", "用途"]
+                    },
+                    {
+                        "collectorTypeName": "物理",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "化学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "光学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "电学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "磁学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "地标",
+                        "questionDirections": ["推测城市"]
+                    },
+                    {
+                        "collectorTypeName": "天气",
+                        "questionDirections": ["推测图中天气"]
+                    },
+                    {
+                        "collectorTypeName": "时间",
+                        "questionDirections": ["推测图中时间"]
+                    }
+                ],
+                "example":"样例1：图片中即将出现什么样的天气？A.晴天 B.多云 C.降雨 D.下雪\n样例2：图片中目前是什么时间？A.清晨 B.中午 C.傍晚 D.深夜\n样例3：图片中这款设备的功能是？A.清洁地板 B.熨烫衣物 C.烘干衣物 D.清洁衣物\n样例4：图片中的建筑位于哪个城市？A.北京 B.上海 C.广州 D.深圳"
+            },
+            {
+                "categoryName": "图片推理",
+                "prompt": "对图像进行深入推理，如根据图片内容特征推断其功能、状态，推测当前物体相关的延伸知识等；",
+                "difficulties": [
+                    " ",
+                    " "
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "推理密码，数字类或者字母单词",
+                        "questionDirections": ["密码", "数字","单词"]
+                    },
+                    {
+                        "collectorTypeName": "emoji",
+                        "questionDirections": ["表情包"]
+                    },
+                    {
+                        "collectorTypeName": "文字类",
+                        "questionDirections": ["提问图片要表达的成语，字谜"]
+                    },
+                    {
+                        "collectorTypeName": "图片类",
+                        "questionDirections": ["提问图片要表达的单词，成语，字谜"]
+                    },
+                    {
+                        "collectorTypeName": "图片猜成语",
+                        "questionDirections": ["提问图片要表达的成语"]
+                    }
+                ],
+                "example":" "
+            },
+            {
+                "categoryName": "空间推理",
+                "prompt": "对图像中属性进行深入空间推理",
+                "difficulties": [
+                    " ",
+                    " "
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "立体图和展开图对应关系",
+                        "questionDirections": ["密码"]
+                    },
+                    {
+                        "collectorTypeName": "emoji",
+                        "questionDirections": ["表情包"]
+                    },
+                    {
+                        "collectorTypeName": "图片猜成语",
+                        "questionDirections": ["提问图片要表达的成语"]
+                    },
+                    {
+                        "collectorTypeName": "地图",
+                        "questionDirections": ["提问图片要表达的地理位置等"]
+                    },
+                    {
+                        "collectorTypeName": "路线图",
+                        "questionDirections": ["提问图片要表达的线路"]
+                    },
+                    {
+                        "collectorTypeName": "空间计数",
+                        "questionDirections": ["提问图片要表达的空间计数"]
+                    },
+                    {
+                        "collectorTypeName": "试图",
+                        "questionDirections": ["提问图片"]
+                    },
+                    {
+                        "collectorTypeName": "视图",
+                        "questionDirections": ["提问图片"]
+                    }
+                ],
+                "example":"样例1：图片中即将出现什么样的天气？A.晴天 B.多云 C.降雨 D.下雪\n样例2：图片中目前是什么时间？A.清晨 B.中午 C.傍晚 D.深夜\n样例3：图片中这款设备的功能是？A.清洁地板 B.熨烫衣物 C.烘干衣物 D.清洁衣物\n样例4：图片中的建筑位于哪个城市？A.北京 B.上海 C.广州 D.深圳"
+            },
+            {
+                "categoryName": "多行为预测",
+                "prompt": "对图像",
+                "difficulties": [
+                    " ",
+                    " "
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "立体图和展开图对应关系",
+                        "questionDirections": ["密码"]
+                    },
+                    {
+                        "collectorTypeName": "emoji",
+                        "questionDirections": ["表情包"]
+                    },
+                    {
+                        "collectorTypeName": "图片猜成语",
+                        "questionDirections": ["提问图片要表达的成语"]
+                    },
+                    {
+                        "collectorTypeName": "视频抽帧",
+                        "questionDirections": ["行为预测, 顺序判断"]
+                    },
+                    {
+                        "collectorTypeName": "有序排列",
+                        "questionDirections": ["行为预测, 顺序判断"]
+                    }
+                ],
+                "example":"样例1：图片中即将出现什么样的天气？A.晴天 B.多云 C.降雨 D.下雪\n样例2：图片中目前是什么时间？A.清晨 B.中午 C.傍晚 D.深夜\n样例3：图片中这款设备的功能是？A.清洁地板 B.熨烫衣物 C.烘干衣物 D.清洁衣物\n样例4：图片中的建筑位于哪个城市？A.北京 B.上海 C.广州 D.深圳"
+            },
+            {
+                "categoryName": "专业推理",
+                "prompt": "对图像中属性进行深入推理，如根据外观特征推断其功能、用途或状态，推测天气及与当前物体相关的延伸知识等；需要结合先验知识与视觉信息进行分析（物体功能、天气推测、时间推测、地标建筑推理，以及物理、化学、光学、电学、磁学等属性）物理和化学完全分开，不可在同一个问题中出现物理和化学两种属性。",
+                "difficulties": [
+                   "单步推理, 专业推理",
+                   "以下满足一项：1、多步推理；2、 需要结合外部知识进行"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "电学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "磁学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "光学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "化学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "地球科学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "农业科学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "结构化",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "结构化学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "天文学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "医疗印象学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "医疗影像学",
+                        "questionDirections": ["属性"]
+                    },
+                    {
+                        "collectorTypeName": "地理学",
+                        "questionDirections": ["属性"]
+                    }
+                ],
+                "example":"样例1：图片中即将出现什么样的天气？A.晴天 B.多云 C.降雨 D.下雪\n样例2：图片中目前是什么时间？A.清晨 B.中午 C.傍晚 D.深夜\n样例3：图片中这款设备的功能是？A.清洁地板 B.熨烫衣物 C.烘干衣物 D.清洁衣物\n样例4：图片中的建筑位于哪个城市？A.北京 B.上海 C.广州 D.深圳"
+            },
+            {
+                "categoryName": "谜题推理",
+                "prompt": "你是逻辑严谨的谜题推理专家，擅长从复杂线索中找出隐藏的规律和唯一解。",
+                "difficulties": [
+                   "多步推理 专业推理",
+                   "以下满足一项：1、多步推理；2、 需要结合外部知识进行"
+                ],
+                "collectorTypes": [
+                    {
+                        "collectorTypeName": "抽象图形类",
+                        "questionDirections": ["规律推理"]
+                    },
+                    {
+                        "collectorTypeName": "猜成语",
+                        "questionDirections": ["属性, 猜成语"]
+                    },
+                    {
+                        "collectorTypeName": "图片猜成语",
+                        "questionDirections": ["图片猜成语"]
+                    },
+                    {
+                        "collectorTypeName": "迷宫路径类",
+                        "questionDirections": ["迷宫路径"]
+                    },
+                    {
+                        "collectorTypeName": "密码破译类",
+                        "questionDirections": ["密码破译类，逻辑推理"]
+                    },
+                    {
+                        "collectorTypeName": "拼图类",
+                        "questionDirections": ["拼图，位置推理"]
+                    }
+                ],
+                "example":"样例1：图片中即将出现什么样的天气？A.晴天 B.多云 C.降雨 D.下雪\n样例2：图片中目前是什么时间？A.清晨 B.中午 C.傍晚 D.深夜\n样例3：图片中这款设备的功能是？A.清洁地板 B.熨烫衣物 C.烘干衣物 D.清洁衣物\n样例4：图片中的建筑位于哪个城市？A.北京 B.上海 C.广州 D.深圳"
+            }
+
+        ]
+        
+    }
+}
