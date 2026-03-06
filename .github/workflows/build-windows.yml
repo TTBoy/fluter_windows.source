@@ -5,38 +5,28 @@ on:
     branches: [ main ]
 
 jobs:
-  build-windows:
+  build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      - name: Enable Windows
-        run: flutter config --enable-windows-desktop
+      - run: flutter config --enable-windows-desktop
+      - run: flutter pub get
+      - run: flutter build windows --release
 
-      - name: Install deps
-        run: flutter pub get
+      - name: Install Inno Setup
+        run: choco install innosetup -y
 
-      - name: Build
-        run: flutter build windows --release
+      - name: Build Installer
+        run: iscc installer.iss
 
-      - name: Check build
-        run: dir build/windows/x64/runner/Release
-
-      - name: Zip
-        run: |
-          Compress-Archive `
-            -Path build/windows/x64/runner/Release/* `
-            -DestinationPath windows-build.zip
-
-      - name: Upload
+      - name: Upload Installer
         uses: actions/upload-artifact@v4
         with:
-          name: windows-app
-          path: windows-build.zip
+          name: windows-installer
+          path: installer/*.exe
