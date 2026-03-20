@@ -25,8 +25,8 @@ class UserSession {
   int? id;
   String baseUrl = 'http://10.0.2.24:3101';
   // String baseUrl='http://10.1.5.103:9000';
-  String apiUrl = 'https://api.shubiaobiao.com/v1/chat/completions';
-  String apiKey = 'sk-NHfglGBWKuzKXBH5kV55BtNJaxrjRp8lkvJ7qiWK3EqLitG4';
+  String apiUrl = 'https://api.shubiaobiao.cn/v1/chat/completions';
+  String apiKey = 'sk-m8JOkLMVRoCVSDylBd9618F9F4D94b0eBc2b6232850f299f';
   String modelName='gemini-2.5-flash';
   String getRepetPath = '';
   String version='0.0.27';
