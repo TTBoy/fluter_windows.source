@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ImageQA"
-#define MyAppVersion "0.0.27"
+#define MyAppVersion "0.0.28"
 #define MyAppExeName "qa_imageprocess.exe"
 
 [Setup]
